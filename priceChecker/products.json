@@ -1,0 +1,19 @@
+{
+  "DellMonitorU2715H":{
+    "weblink":"http://accessories.dell.com/sna/products/Gaming_Accessories/productdetail.aspx?c=ca&l=en&s=dhs&cs=cadhs1&sku=210-ADKB",
+    "origPriceKeyStringBefore":"<span name=\"pricing_retail_price\" class=\"pricing_retail_price\">",
+    "origPriceKeyStringAfter":"<",
+    "salePriceKeyStringBefore":"<span name=\"pricing_sale_price\" class=\"pricing_sale_price\">",
+    "salePriceKeyStringAfter":"<"
+  },
+  
+  "DellMonitorU3415W":{
+    "weblink":"http://accessories.dell.com/sna/products/Gaming_Accessories/productdetail.aspx?c=ca&l=en&s=dhs&cs=cadhs1&sku=210-ADTR",
+    "origPriceKeyStringBefore":"<span name=\"pricing_retail_price\" class=\"pricing_retail_nodiscount_price\">",
+    "origPriceKeyStringAfter":"<",
+    "salePriceKeyStringBefore":"<span name=\"pricing_technote_desc\" class=\"pricing_technote_desc\">",
+    "salePriceKeyStringAfter":""
+  }
+}
+
+
