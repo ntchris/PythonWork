@@ -1,4 +1,4 @@
-﻿import threading
+import threading
 import time
 import Queue
 
@@ -7,16 +7,11 @@ import os
 import fnmatch
 
 
-OldSubStr = u"{有声听书吧www.Ysts8.com}";
-NewSubStr = u"";
-TXTFilter = u"*.txt"
-MP3Filter =u"*.mp3"
-WorkPath =u"F:\music\shendiao\神雕侠侣_易峰001_030"
-#WorkPath ="."
+OldSubStr = " ";
+NewSubStr = "";
+TXTFilter = "*.txt"
+WorkPath ="."
 
-oldNewNameMapping = dict()
-
-   
    
 MAXQUEUESIZE = 20
 INVALIDVALUE = -999
@@ -46,27 +41,19 @@ def getNewName(file, oldSubStr, newSubStr):
   newName = oldName.replace(oldSubStr, newSubStr)
   
   return newName
-  
+  # os.rename(src, dst)
 
      
-def doRename(filelist, workpath):
+def doRename(filelist, oldsubstring, newsubstring):
 
    for file in filelist:
       
-      try:
-        newName = oldNewNameMapping[file]
-        #
-        if( not (file==newName)):
-           #if old == new, nothing to change, else
-           print(file + " new name is " + newName)
-           try:
-              os.rename(workpath + "/"+ file,  workpath + "/"+ newName) 
-           except WindowsError as er:
-              print (file + " to " + newName + " : error: " + str(er))
-              continue
-      except KeyError:
-        #ignore because it doesn't need rename      
-        continue
+      newName = getNewName(file, oldsubstring, newsubstring);
+      #
+      if( not (file==newName)):
+         #if old == new, nothing to change, else
+         print(file + " new name is " + newName)
+         os.rename(file,  newName) 
 
       
 def doBatchRename(workpath, filter, oldSubStr, newSubStr):
@@ -80,9 +67,6 @@ def doBatchRename(workpath, filter, oldSubStr, newSubStr):
    
    #3 actual operation
    
-   if(oldSubStr==""):
-      print ("nothing to replace")
-      return
    
    ######################################################
    #1  get all names (filter applied)
@@ -103,17 +87,16 @@ def doBatchRename(workpath, filter, oldSubStr, newSubStr):
    print ("start preview");
    
    # file exists, and new name != old name
-   
+   needRenameFileCount =0
    
    for file in filelist:
       
       newName = getNewName(file, oldSubStr, newSubStr);
       if(not newName == file):
-         oldNewNameMapping[file]=newName
-         
+         needRenameFileCount = needRenameFileCount +1
          print("file " + file + " , new name is: " + newName)
       
-   if  (len(oldNewNameMapping) == 0):
+   if  needRenameFileCount == 0:
       print("No file need to rename")
       return
    
@@ -121,7 +104,7 @@ def doBatchRename(workpath, filter, oldSubStr, newSubStr):
    print("Should take actual action ? " + shouldDo);
    
    if( shouldDo =="yes"):
-      doRename(filelist , workpath);   
+      doRename(filelist, oldSubStr, newSubStr);   
    else:
       print ("action cancelled")
    
@@ -134,7 +117,7 @@ def doBatchRename(workpath, filter, oldSubStr, newSubStr):
 def main():
 
    # TXTFilter = "*.txt"
-   doBatchRename(WorkPath, MP3Filter, OldSubStr,"");
+   doBatchRename(WorkPath, TXTFilter, "-Copy","Copy");
    
     
   
