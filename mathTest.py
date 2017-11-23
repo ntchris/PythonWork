@@ -186,7 +186,7 @@ class QuestionGenerator:
      for q in questlist :
         i=i+1
         indexStr = "(" + str(i)+") "
-        fileOutput(fileObj, indexStr + q.answerText+"  ");
+        fileOutput(fileObj, indexStr + q.answerText+"    ");
    
    def printOptions(self):
       print("")

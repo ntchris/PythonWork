@@ -5,9 +5,12 @@ import threading
 import time
 from pprint import pprint
 
+dupanAriaPort=9695
+
 def listMethods():
+  global dupanAriaPort
   jsonreq = json.dumps({'jsonrpc':'2.0', 'id':'qwer', 'method':'system.listMethods'})
-  c = urllib2.urlopen('http://localhost:6800/jsonrpc', jsonreq)
+  c = urllib2.urlopen("http://localhost:"+str(dupanAriaPort)+"/jsonrpc", jsonreq)
   pprint(json.loads(c.read()))
 
 
@@ -43,11 +46,8 @@ def listNotifications(port):
     pass
   
   
-
-  
-def main():
-
-  #listNotifications(6800)
+## found, 9695
+def findPort():
   global found
   for i in range (2, 65535):
   #  listNotifications(i)
@@ -57,5 +57,11 @@ def main():
         break
      threading.Thread(target=listNotifications, args=[i]).start()
      time.sleep(0.01)
+  
+  
+  
+def main():
+   listMethods()
+  #listNotifications(6800)
   
 main()
