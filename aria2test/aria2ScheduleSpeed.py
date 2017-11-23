@@ -3,11 +3,19 @@
 import urllib2, json
 import threading
 import time
+import datetime
 from pprint import pprint
 
 myAria2cPort=9695
 secret='abcdmadpanz'
 param_secret="token:"+secret
+
+
+class Constants:
+    GoodHour =1
+    GoodMinute=57
+    
+
 
 def listMethods():
   global myAria2cPort
@@ -109,7 +117,19 @@ def setGlobalSpeedLimit(speedLimit):
   
   
 
-  
+def checkForGoodTime():
+    nowTime = time.localtime()
+    
+    nowTime= datetime.datetime.now()    
+    today2AM = nowTime.replace(hour=Constants.GoodHour, minute=Constants.GoodMinute, second=0, microsecond=0)
+    
+    if (nowTime  < today2AM):
+        print ("small, " + str(nowTime) )
+        
+    else :
+        print ("later, "+ str(nowTime ))
+        print ("difference: is " + str(nowTime-today2AM))
+    
     
 def test():
    listMethods()
@@ -120,7 +140,8 @@ def test():
       
 def main():
    
-   test()
+   ###test()
+   checkForGoodTime()
 
 
 main()
