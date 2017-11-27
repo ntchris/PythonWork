@@ -137,6 +137,7 @@ def startTraverFolder(workPath):
 
 def getDirInfo():
    if(len(sys.argv)<=1):
+      print("Map the NAS network drive as Z: and run the program in PC as python folderListXML.py z:/")
       #workPath = "d:\\temp"
       #workPath = "Documents and Settings"
       workPath = "\\\\?\\"+"c:\\P4\\dev\\ate\\projects\\api\\testing\\7.0.0\\JavaATTD\\scripts\\SCMBuild\\bin\\tmp"
