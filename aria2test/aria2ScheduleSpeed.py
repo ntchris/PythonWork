@@ -7,16 +7,16 @@ import datetime
 from pprint import pprint
 
 
-myAria2cPort=296951
-secret='dpn'
+myAria2cPort=39695
+secret=''
 param_secret="token:"+secret
 
 
 class Constants:
   GoodHour =1
-  GoodMinute=57
+  GoodMinute=58
   EndHour=8
-  EndMinute=5
+  EndMinute=0
   
   OneMinute=60
   resultOK='OK'
@@ -54,7 +54,7 @@ def listNotifications(port):
   try:
     c = urllib2.urlopen(url, jsonreq)
     pprint(json.loads(c.read()))
-    print("found! port is "+str(port)+"!!!")
+    print("found! port is "+str(port)+"!!")
 
     found=True
   except urllib2.URLError as error:
@@ -148,11 +148,19 @@ def setGlobalSpeedLimit(speedLimit):
   
   
 
-def checkForGoodTime(goodtime, endtime):
+def checkForGoodTime( ):
 
     nowTime= datetime.datetime.now()    
+    GoodTime = nowTime.replace(hour=Constants.GoodHour, minute=Constants.GoodMinute, second=0, microsecond=0)
+      
+    EndTime= nowTime.replace(hour=Constants.EndHour, minute=Constants.EndMinute, second=0, microsecond=0)
+
     print("now is " + str(nowTime))
-    return (nowTime > goodtime ) and ( nowTime < endtime) 
+
+    large=(nowTime > GoodTime ) 
+    
+    less = ( nowTime < EndTime) 
+    return (large and less)
            
     
 def test():
@@ -164,18 +172,14 @@ def test():
       
 def main():
   
-   nowTime= datetime.datetime.now()    
-   GoodTime = nowTime.replace(hour=Constants.GoodHour, minute=Constants.GoodMinute, second=0, microsecond=0)
-      
-   EndTime= nowTime.replace(hour=Constants.EndHour, minute=Constants.EndMinute, second=0, microsecond=0)
-
+  
 
    currentSpeedLimit=getGlobalSpeedLimit()
    print ("current Global speed limit is "+currentSpeedLimit)
 
    setSpeedLimit = False
    while True:
-     if( checkForGoodTime(GoodTime, EndTime)):
+     if( checkForGoodTime()):
        print("Good time, setting limit to 0")
        setGlobalSpeedLimit("0")
        break;
