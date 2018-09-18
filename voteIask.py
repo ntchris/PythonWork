@@ -5,6 +5,7 @@ import time
 import json
 import string
 import urllib2
+import random
 
 
 class Constants:
@@ -14,7 +15,7 @@ class Constants:
    VoteIdPart = u"&id="
    # SearchKeyword = "onclick=\"postDigg(\'good\',"
    SearchKeyword = "onclick=\"javascript:postDigg('good',"
-   RepeatTimes = 20
+   RepeatTimes = 30
 
    
 def getVoteActionPart(isVoteGood):
@@ -52,7 +53,11 @@ def repeatVote(url, times):
     for i in range(times):
        resp = urllib2.urlopen(url)
        print(str(i) + " ")
-       time.sleep(1)
+       # sleepSecond = random.uniform(0.5, 6, 0.1)
+       sleepSecond = random.randrange(500, 4000, 250) / 1000.0
+
+       print("sleeping for " + str(sleepSecond) + " second")
+       time.sleep(sleepSecond)
 
 
 def main():
