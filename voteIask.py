@@ -4,7 +4,10 @@ import sys
 import time
 import json
 import string
-import urllib2
+# import urllib2
+import urllib
+from urllib.request import urlopen
+
 import random
 
 
@@ -26,10 +29,11 @@ def getVoteActionPart(isVoteGood):
     
     
 def getPageVoteAid(webpage):
-   # print(webpage)
-   dontcare, voteid = webpage.split(Constants.SearchKeyword)
+   
+   
+   dontcare, voteid = webpage.decode('utf8').split(Constants.SearchKeyword)
    # print("voteid is  " + voteid)
-
+   
    voteid, dontcare = voteid.split(")\">", 1)
    return voteid
 
@@ -42,8 +46,7 @@ def generateVoteUrl(isVoteGood, voteId):
 
 def getWebPage(url):
 
-#   urllib.request.urlopen(url)
-   resp = urllib2.urlopen(url)
+   resp = urlopen(url)
    page = resp.read()
    return page
 
@@ -51,7 +54,7 @@ def getWebPage(url):
 def repeatVote(url, times):
     print("working...")
     for i in range(times):
-       resp = urllib2.urlopen(url)
+       resp = urlopen(url)
        print(str(i) + " ")
        # sleepSecond = random.uniform(0.5, 6, 0.1)
        sleepSecond = random.randrange(500, 4000, 250) / 1000.0
@@ -67,10 +70,10 @@ def main():
       # sys.exit(0)
 
    webpageUrl = "http://www.iask.ca/news/canada/2018/07/492898.html"
-   webpageUrl = raw_input('paste your iask url')
+   webpageUrl = input('paste your iask url')
    webpageUrl = webpageUrl.strip()
    
-   isvotegood = raw_input("Vote Good or Bad ? ")
+   isvotegood = input("Vote Good or Bad ? ")
    isvotegood = isvotegood.lower()
     
    if(isvotegood == "good"):
