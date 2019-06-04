@@ -5,26 +5,20 @@ import threading
 import time
 from pprint import pprint
 
-dupanAriaPort=9695
+dupanAriaPort=9000
 
 def listMethods():
   global dupanAriaPort
   jsonreq = json.dumps({'jsonrpc':'2.0', 'id':'qwer', 'method':'system.listMethods'})
   c = urllib2.urlopen("http://localhost:"+str(dupanAriaPort)+"/jsonrpc", jsonreq)
-  pprint(json.loads(c.read()))
+  print(json.loads(c.read()))
 
-
-found=False
-#{u'id': u'qwer',
-# u'jsonrpc': u'2.0',
-# u'result': [u'aria2.addUri',
-            #u'aria2.addTorrent',
-#...
+ 
 
 def listNotifications():
   jsonreq = json.dumps({'jsonrpc':'2.0', 'id':'qwer', 'method':'system.listNotifications'})
   c = urllib2.urlopen('http://localhost:6800/jsonrpc', jsonreq)
-  pprint(json.loads(c.read()))
+  print(json.loads(c.read()))
 
 
 def listNotifications(port):
@@ -37,7 +31,7 @@ def listNotifications(port):
   
   try:
     c = urllib2.urlopen(url, jsonreq)
-    pprint(json.loads(c.read()))
+    print(json.loads(c.read()))
     print("found! port is "+str(port)+"!!!")
 
     found=True
@@ -59,10 +53,18 @@ def findPort():
      time.sleep(0.01)
   
   
-  
-@def main():
-   #listMethods()
+def getVersion():
+  global dupanAriaPort
+  jsonreq = json.dumps({'jsonrpc':'2.0', 'id':'qwer', 'method':'aria2.getVersion','token':'super' })  
+  c = urllib2.urlopen("http://localhost:"+str(dupanAriaPort)+"/jsonrpc", jsonreq)
+  print(json.loads(c.read()))
+
+
+
+def main():
+  getVersion()
   #listNotifications(6800)
-  @pass
+  #listMethods();
+  pass
   
-@main()
+main()

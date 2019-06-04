@@ -22,13 +22,23 @@ class Constants:
   resultOK='OK'
   limitedSpeed="50K"      
 
-
+# good
 def listMethods():
   global myAria2cPort
   jsonreq = json.dumps({'jsonrpc':'2.0', 'id':'qwer', 'method':'system.listMethods'})
   c = urllib2.urlopen("http://localhost:"+str(myAria2cPort)+"/jsonrpc", jsonreq)
   pprint(json.loads(c.read()))
 
+  
+# bad
+
+def listMethodsbad():
+  global dupanAriaPort
+  jsonreq = json.dumps({'jsonrpc':'2.0', 'id':'qwer', 'method':'system.listMethods'})
+  c = urllib2.urlopen("http://localhost:"+str(dupanAriaPort)+"/jsonrpc", jsonreq)
+  print(json.loads(c.read()))
+
+  
 
 found=False
 #{u'id': u'qwer',
@@ -161,7 +171,22 @@ def checkForGoodTime( ):
     
     less = ( nowTime < EndTime) 
     return (large and less)
-           
+  
+
+
+
+ #  jsonreq = json.dumps(  {'jsonrpc':'2.0', 'id':'qwer','method':'aria2.getGlobalOption','params':[param_secret]} )
+
+def getVersion():
+  global dupanAriaPort
+  #jsonreq = json.dumps({'jsonrpc':'2.0', 'id':'qwer', 'method':'aria2.getVersion','params':[param_secret]})
+  jsonreq = json.dumps({'jsonrpc':'2.0', 'id':'qwer', 'method':'aria2.getVersion','params':['token:super']})
+  c = urllib2.urlopen("http://localhost:"+str(myAria2cPort)+"/jsonrpc", jsonreq)
+  print(json.loads(c.read()))
+
+
+
+   
     
 def test():
    listMethods()
@@ -172,25 +197,8 @@ def test():
       
 def main():
   
-  
-
-   currentSpeedLimit=getGlobalSpeedLimit()
-   print ("current Global speed limit is "+currentSpeedLimit)
-
-   setSpeedLimit = False
-   while True:
-     if( checkForGoodTime()):
-       print("Good time, setting limit to 0")
-       setGlobalSpeedLimit("0")
-       break;
-     else:
-       if(not setSpeedLimit) :
-         setGlobalSpeedLimit(Constants.limitedSpeed)
-         setSpeedLimit=True
-
-       print("not yet good time, sleeping")
-       time.sleep(2*Constants.OneMinute)
-      
+  getVersion();
+    
 
 
 main()
