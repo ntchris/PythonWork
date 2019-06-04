@@ -71,20 +71,19 @@ class FileCryptParser(HTMLParser):
         realfilecryptlink=None
         
         response = self.openUrlWithCookie(openlink, self.cookie)
-        newpage_text = str(response.read())
+        newpage_text = response.read().decode('UTF-8')
         
         realfilecryptlink= self.parseFileCryptNewPageToGetNewLink(newpage_text)        
         return realfilecryptlink
     
-    # return html text
+    # return response
     def openUrlWithCookie(self, url, cookie=None):
            req = urllib.request.Request(url, data=None, headers={'User-Agent': 'Mozilla/5.0 (X11; U; Linux i686) Gecko/20071127 Firefox/2.0.0.11' })            
            if( cookie!=None or cookie!=""):
                req.add_header('cookie',  cookie)
         
            response = urllib.request.urlopen(req  )
-           # newpage_text = str(response.read())
-           return response  #newpage_text
+           return response
                  
     def onlineParseRealFileCryptLinks(self):
         # cookie jhjn7ml3mtdpdgs2tmavoa6vt2
@@ -120,18 +119,16 @@ class FileCryptParser(HTMLParser):
         f.write(str(html_text))
         f.close()        
 
-        return str(html_text)
+        return html_text.decode("UTF-8")
 
     def onlineGetZippyFileLinks(self):
         newlist=list()
         for tuple in self.filelist:
             fileObj= self.FileObj(tuple)
             response = self.openUrlWithCookie(fileObj.fileCryptRealLink, self.cookie )
-            #newpage_text = str(response.read())
             fileObj.zippyLink = response.geturl()
             newlist.append(fileObj.toTuple())
             print("zippylink is ", fileObj.zippyLink )
-            #print(response.read())
             time.sleep(2)
         
         self.filelist = newlist
@@ -205,7 +202,7 @@ class FileCryptParser(HTMLParser):
               if( self.startfromCounter < self.startfrom):
                  self.startfromCounter=self.startfromCounter+1
                  self.currentFilename = None 
-                 return
+                 returngetZippyPage
                
               self.currentFilename = fname
                             
