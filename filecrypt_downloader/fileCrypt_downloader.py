@@ -132,8 +132,7 @@ class FileCryptParser(HTMLParser):
             time.sleep(2)
         
         self.filelist = newlist
-        outfile = open( "outputzippy.json", "w")
-        json.dump(self.filelist, outfile)
+      
         return
       
       
@@ -172,8 +171,8 @@ class FileCryptParser(HTMLParser):
 
     def getFileCryptLinkFromOpenLink(self, openlink):
         href = "http://filecrypt.cc"
-        temp, real_link = openlink.split("openLink(\\'")
-        real_link, temp = real_link.split("\\',")
+        temp, real_link = openlink.split("openLink(\'")
+        real_link, temp = real_link.split("\',")
         real_link = href + "/Link/" + real_link + ".html"
         # if(typeof(openLink) == 'undefined') 
         # {var openLink=function(r){location.href=_DOMAIN.replace('https','http')+'/Link/'+r+'.html';}}
@@ -202,7 +201,7 @@ class FileCryptParser(HTMLParser):
               if( self.startfromCounter < self.startfrom):
                  self.startfromCounter=self.startfromCounter+1
                  self.currentFilename = None 
-                 returngetZippyPage
+                 
                
               self.currentFilename = fname
                             
@@ -343,12 +342,16 @@ def main():
     #f = open("Filecrypt2.html", "rt")
     #html_text = f.read()
     
-    # parser = MyHTMLParser()  
-    #filter = ".rar"
+      
+    
     # reallinks is a list of filename and link pair
      
-    #fileObjList= parse_fileCrypt_url_to_zippy_link(fileCryptUrl, 7)
-    #printList(fileObjList)
+    fileObjList= parse_fileCrypt_url_to_zippy_link(fileCryptUrl, 178)
+    
+    outfile = open( "outputzippy.json", "w")
+    json.dump(fileObjList, outfile)
+        
+    printList(fileObjList)
     
     zippy = ZippyShareDownloader()
     
@@ -356,7 +359,7 @@ def main():
     jsonfileObj = open("outputzippy.json", "r")
     filelist = json.load(jsonfileObj)
     
-    zippy.downloadFileList(filelist) 
+    #zippy.downloadFileList(filelist) 
 
     print("done!")
 main()
