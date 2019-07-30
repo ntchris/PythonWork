@@ -5,7 +5,7 @@ import time
 import json
 import os
 import math
-
+import sys
 
 from html.parser import HTMLParser
 #from tkinter.constants import CURRENT
@@ -116,7 +116,7 @@ class FileCryptParser(HTMLParser):
         print("cookie is ",  self.cookie)
         html_text = response.read()
         f = open("fileCryptPage.html", "w")
-        f.write(str(html_text))
+        f.write( html_text.decode("UTF-8"))
         f.close()        
 
         return html_text.decode("UTF-8")
@@ -142,9 +142,10 @@ class FileCryptParser(HTMLParser):
         
         self.startfrom = startfrom
         # everything is inside tbody tag
+        #try:
         tbodyText = self.extra_tbody_text_from_html(html_text)
-        
-        self.feed(tbodyText)            
+        self.feed(tbodyText)
+        # except ValueError:
                
         return  
     
@@ -336,21 +337,28 @@ def parse_fileCrypt_url_to_zippy_link(filecryptUrl, startfrom):
  
 
 def main():
+    argSize = len(sys.argv)
+    skip = 0 
+    selfname= os.path.basename(sys.argv[0])
+    if(argSize <=1):
+       print("usage: "+ selfname + " http://fileCrypt_downloaer.py the_link_to_fileCrypt.html to_skip_number")
+      # return 1
+   
+    elif (argSize >= 2 ):       
+       fileCryptUrl= sys.argv[1]
     
-    fileCryptUrl ="https://filecrypt.cc/Container/F9E561FD4E.html"
-    
+    elif (argSize >= 3 ):        
+       skip=sys.argv[2] 
     #f = open("Filecrypt2.html", "rt")
     #html_text = f.read()
     
       
     
-    # reallinks is a list of filename and link pair
-     
-    fileObjList= parse_fileCrypt_url_to_zippy_link(fileCryptUrl, 178)
-    
+    # reallinks is a list of filename and link pair    
+    fileObjList= parse_fileCrypt_url_to_zippy_link(fileCryptUrl, skip)    
     outfile = open( "outputzippy.json", "w")
     json.dump(fileObjList, outfile)
-        
+    outfile.close()
     printList(fileObjList)
     
     zippy = ZippyShareDownloader()
@@ -358,8 +366,8 @@ def main():
     filelist=list()
     jsonfileObj = open("outputzippy.json", "r")
     filelist = json.load(jsonfileObj)
-    
-    #zippy.downloadFileList(filelist) 
-
+    jsonfileObj.close() 
+    zippy.downloadFileList(filelist) 
+   
     print("done!")
 main()

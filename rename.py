@@ -7,11 +7,13 @@ import os
 import fnmatch
 
 
-OldSubStr = u"{有声听书吧www.Ysts8.com}";
-NewSubStr = u"";
+OldSubStr = u"Patch.UP0082-CUSA01633_00-FINALFANTASYXV00-A0123_keystone.Patch";
+NewSubStr = u"Patch. Final.Fantasy.15.CUSA01633.US.PS4_A0123_keystone.Patch";
+WorkPath =u"D:\Final.Fantasy.15.CUSA01633.US_with.Patch.123_keystone"
+
 TXTFilter = u"*.txt"
 MP3Filter =u"*.mp3"
-WorkPath =u"F:\music\shendiao\神雕侠侣_易峰001_030"
+RarFilter =u"*.rar"
 #WorkPath ="."
 
 oldNewNameMapping = dict()
@@ -134,7 +136,7 @@ def doBatchRename(workpath, filter, oldSubStr, newSubStr):
 def main():
 
    # TXTFilter = "*.txt"
-   doBatchRename(WorkPath, MP3Filter, OldSubStr,"");
+   doBatchRename(WorkPath, RarFilter, OldSubStr,NewSubStr);
    
     
   

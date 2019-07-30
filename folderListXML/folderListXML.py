@@ -5,7 +5,7 @@ import xml.etree.ElementTree as ET
 #For pretty format
 import xml.dom.minidom
 
-errorList =  []
+errorList=list()
 
 class Const(object):
    Attr_FileName = "file_name"
@@ -37,17 +37,18 @@ def recurse_traverFolder(parentNode, toAddFullPath):
 
    try:
       # very important to use unicode(path)
-      obj = os.walk(unicode(toAddFullPath))
+      obj = os.walk(toAddFullPath)
       tuples = next(obj)
    except Exception as e:
-      print("Error accessing: " + toAddFullPath.encode("utf-8"))
+      
+      print("Error accessing: " + toAddFullPath.encode("UTF-8"))
       errorList.append(e)
       print(errorList)
       print("return ")
       # something is wrong, no access ? fake folder? return current node as is
       return currentFolderNode
 
-   dirpath=unicode(tuples[0])
+   dirpath=tuples[0]
    dirnames = tuples[1]
    filenames = tuples[2]  
 
@@ -118,9 +119,9 @@ def writePrettyTextFile(tree):
    tempXmlObj = xml.dom.minidom.parseString(xmltext)
    
    prettyText = tempXmlObj.toprettyxml(indent="   ", newl='\n')
-   prettyText = prettyText.encode("utf-8")
+   prettyText = prettyText.encode('UTF-8')
    
-   file = open("outputfile.xml", "w")
+   file = open("outputfile.xml", "wb")
    file.write(prettyText)
    file.close
 
@@ -140,8 +141,10 @@ def getDirInfo():
       print("Map the NAS network drive as Z: and run the program in PC as python folderListXML.py z:/")
       #workPath = "d:\\temp"
       #workPath = "Documents and Settings"
-      workPath = "\\\\?\\"+"c:\\P4\\dev\\ate\\projects\\api\\testing\\7.0.0\\JavaATTD\\scripts\\SCMBuild\\bin\\tmp"
+      #workPath = "\\\\?\\"+"c:\\P4\\dev\\ate\\projects\\api\\testing\\7.0.0\\JavaATTD\\scripts\\SCMBuild\\bin\\tmp"
       #workPath = "c:\\P4\\dev\\ate\\projects\\api\\testing\\7.0.0\\JavaATTD\\scripts\\SCMBuild\\bin\\tmp\\"
+      workPath = "z:\\ps4"
+      #return 0
    else:
       workPath = sys.argv[1]
       if(workPath==""):
@@ -150,7 +153,7 @@ def getDirInfo():
    print("checking path " + workPath)
 
    startTraverFolder("\\\\?\\"+ workPath)
-
+   print("done")
 
 def testParse(xmlFile):
    tree = ET.parse(xmlFile)
