@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{d80eaa6c-ae9e-4a05-a0b9-4f0271d2d485}</ProjectGuid>
+    <ProjectHome />
+    <StartupFile>voteIask.py</StartupFile>
+    <SearchPath />
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <InterpreterId>MSBuild|env2|$(MSBuildProjectFullPath)</InterpreterId>
+    <TestFramework>unittest</TestFramework>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+  <PropertyGroup>
+    <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="AlreadyThankedItemIDList.txt" />
+    <Content Include="aria2test\myconfig.txt" />
+    <Content Include="aria2test\pandconfig.txt" />
+    <Content Include="filecrypt_downloader\ADecksDestiny.part1.rar_zippy.html" />
+    <Content Include="filecrypt_downloader\ADecksDestiny.part2.rar_zippy.html" />
+    <Content Include="filecrypt_downloader\fileCryptPage.html" />
+    <Content Include="mathTests.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="aria2test\aria2detect.py" />
+    <Compile Include="aria2test\aria2getVersion.py" />
+    <Compile Include="aria2test\aria2ScheduleSpeed.py" />
+    <Compile Include="aria2test\aria2test.py" />
+    <Compile Include="battinfoParser.py" />
+    <Compile Include="byteHexString.py" />
+    <Compile Include="filecrypt_downloader\fileCrypt_downloader.py" />
+    <Compile Include="filetest.py" />
+    <Compile Include="fileToHex.py" />
+    <Compile Include="folderListXML\folderListXML.py" />
+    <Compile Include="folderSize.py" />
+    <Compile Include="hdskyThanks.py" />
+    <Compile Include="httpRequestRepeat.py" />
+    <Compile Include="id33.py" />
+    <Compile Include="ListNLargestFile.py" />
+    <Compile Include="mathTest.py" />
+    <Compile Include="next.py" />
+    <Compile Include="priceChecker\priceChecker.py" />
+    <Compile Include="pyemail.py" />
+    <Compile Include="PyThreads.py" />
+    <Compile Include="pyunzip.py" />
+    <Compile Include="rename.py" />
+    <Compile Include="renamV0.py" />
+    <Compile Include="setMp3TrackNumber.py" />
+    <Compile Include="stringProcess.py" />
+    <Compile Include="sub.py" />
+    <Compile Include="subRemoveChs.py" />
+    <Compile Include="test.py" />
+    <Compile Include="testfile.py" />
+    <Compile Include="testWhile.py" />
+    <Compile Include="thread.py" />
+    <Compile Include="timer.py" />
+    <Compile Include="voteIask.py" />
+    <Compile Include="wordsolve.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="aria2test" />
+    <Folder Include="filecrypt_downloader" />
+    <Folder Include="folderListXML" />
+    <Folder Include="priceChecker" />
+  </ItemGroup>
+  <ItemGroup>
+    <Interpreter Include="env1\">
+      <Id>env1</Id>
+      <Version>3.6</Version>
+      <Description>env1 (Python 3.6 (64-bit))</Description>
+      <InterpreterPath>Scripts\python.exe</InterpreterPath>
+      <WindowsInterpreterPath>Scripts\pythonw.exe</WindowsInterpreterPath>
+      <PathEnvironmentVariable>PYTHONPATH</PathEnvironmentVariable>
+      <Architecture>X64</Architecture>
+    </Interpreter>
+    <Interpreter Include="env2\">
+      <Id>env2</Id>
+      <Version>3.7</Version>
+      <Description>env2 (Python 3.7 (64-bit))</Description>
+      <InterpreterPath>Scripts\python.exe</InterpreterPath>
+      <WindowsInterpreterPath>Scripts\pythonw.exe</WindowsInterpreterPath>
+      <PathEnvironmentVariable>PYTHONPATH</PathEnvironmentVariable>
+      <Architecture>X64</Architecture>
+    </Interpreter>
+    <Interpreter Include="env\">
+      <Id>env</Id>
+      <Version>3.8</Version>
+      <Description>env (Python 3.8 (64-bit))</Description>
+      <InterpreterPath>Scripts\python.exe</InterpreterPath>
+      <WindowsInterpreterPath>Scripts\pythonw.exe</WindowsInterpreterPath>
+      <PathEnvironmentVariable>PYTHONPATH</PathEnvironmentVariable>
+      <Architecture>X64</Architecture>
+    </Interpreter>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
+</Project>

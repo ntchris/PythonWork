@@ -4,9 +4,12 @@ import sys
 import time
 import json
 import string
+import gzip
 # import urllib2
 import urllib
 from urllib.request import urlopen
+from urllib import request as urlrequest
+proxy_host = 'localhost:80'
 
 import random
 
@@ -18,7 +21,7 @@ class Constants:
    VoteIdPart = u"&id="
    # SearchKeyword = "onclick=\"postDigg(\'good\',"
    SearchKeyword = "onclick=\"javascript:postDigg('good',"
-   RepeatTimes = 30
+   RepeatTimes = 45
 
    
 def getVoteActionPart(isVoteGood):
@@ -44,10 +47,45 @@ def generateVoteUrl(isVoteGood, voteId):
     return url
 
 
-def getWebPage(url):
 
-   resp = urlopen(url)
-   page = resp.read()
+def getHttpHeaders():
+    headers={}
+    headers['User-Agent'] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:73.0) Gecko/20100101 Firefox/73.0"
+    accept ="text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"
+    headers['Accept'] = accept 
+
+    encode = "gzip, deflate"
+    headers['Accept-Encoding'] = encode
+    return headers
+
+def readUseProxy(url, proxy):
+    headers = getHttpHeaders()
+    req = urllib.request.Request(url, data=None, headers=  headers)
+    req.set_proxy(proxy_host, 'http')
+    resp = urlrequest.urlopen(req)
+    page = resp.read( ) 
+    return page
+
+
+
+def getWebPage(url):   
+
+   # headers is a dict
+   headers = getHttpHeaders()
+   page = ""
+   # page = readUseProxy(url, "127.0.0.1")
+   req = urllib.request.Request(url, data=None, headers=  headers)   
+   resp = urlrequest.urlopen(req)
+   page = resp.read( ) 
+
+   encoding = resp.info().get('Content-Encoding')
+
+   if encoding == 'gzip':
+      print("gzip html")
+      page = gzip.decompress(page )
+   elif encoding  == "deflate":
+      print("plain text, deflate")
+
    return page
 
 
@@ -69,7 +107,7 @@ def main():
    #   print("Usage: python " + sys.argv[0] + "iask_link")
       # sys.exit(0)
 
-   webpageUrl = "http://www.iask.ca/news/canada/2018/07/492898.html"
+   #webpageUrl = "http://www.iask.ca/news/canada/2020/02/554182.html"
    webpageUrl = input('paste your iask url')
    webpageUrl = webpageUrl.strip()
    
@@ -90,8 +128,7 @@ def main():
    voteid = getPageVoteAid(webpage)
    
    repeatVoteUrl = generateVoteUrl(isvotegood, voteid)
-   print(repeatVoteUrl)
-   # working link  http://www.iask.ca/plus/digg_ajax.php?action=bad&id=492898
+   print(repeatVoteUrl) 
    
    repeatVote(repeatVoteUrl, Constants.RepeatTimes)
 
