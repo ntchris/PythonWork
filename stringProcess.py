@@ -2,7 +2,7 @@
 import string
 import unittest
 
-
+# now can use bool startswith()  and bool endswith()
 def isStringEndingWith(str, substr):
     print(str + "  " + substr)
     foundIndex = str.rfind(substr)
