@@ -1,5 +1,7 @@
 
 
+
+
 def funcA(a):
    print("funcA "+a)
 
@@ -10,14 +12,14 @@ def funcC(a,b,c):
    print("funcC "+str(a) + " " + str(b) + " " + str(c))
 
 
-def call_func(func, *arg):
+def retry_func(func, *arg):
+   print("calling " + func.__name__ )
    func(*arg)
 
 
 def main():
-   call_func(funcA, "AAA")
-   call_func(funcB, "AAA", "BBB")
-   call_func(funcC, "AAA", "BBB", "CCC")
+   retry_func(funcA, "AAA")
+   retry_func(funcB, "AAA", "BBB")
+   retry_func(funcC, "AAA", "BBB", "CCC")
 
 main()
-
